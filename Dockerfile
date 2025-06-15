@@ -50,4 +50,4 @@ ENV HOME=/app
 EXPOSE $PORT
 
 # Entrypoint for running migrations before launch
-CMD ["bash", "-c", "./bin/phoenix_liveview_demo eval \"PhoenixLiveviewDemo.Release.migrate()\" && ./bin/phoenix_liveview_demo start"]
+CMD ["bash", "-c", "./bin/phoenix_liveview_demo rpc PhoenixLiveviewDemo.Release.migrate && ./bin/phoenix_liveview_demo start"]
