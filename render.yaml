@@ -2,10 +2,10 @@ services:
   - type: web
     name: phoenix-restaurant-dashboard
     runtime: docker
-    plan: hobby
+    plan: free # Changed from 'starter' to 'free'
     region: oregon
     branch: main
-    buildCommand: mix deps.get && mix assets.deploy
+    buildCommand: mix deps.get && cd assets && npm ci && cd .. && mix assets.deploy
     startCommand: mix phx.server
     envVars:
       - key: MIX_ENV
@@ -28,5 +28,5 @@ databases:
   - name: phoenix-restaurant-db
     databaseName: phoenix_restaurant_dashboard
     user: phoenix_user
-    plan: starter
+    plan: free # Changed from 'starter' to 'free'
     region: oregon
