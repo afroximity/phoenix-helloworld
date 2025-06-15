@@ -25,6 +25,10 @@ RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 COPY priv priv
 COPY assets assets
 
+
+# Copy Tailwind config files
+COPY assets/tailwind.config.js assets/postcss.config.js assets/
+
 # Deploy assets (this will compile Tailwind CSS)
 RUN mix assets.deploy
 
