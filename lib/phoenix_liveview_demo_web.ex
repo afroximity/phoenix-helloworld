@@ -23,7 +23,6 @@ defmodule PhoenixLiveviewDemoWeb do
         layouts: [html: PhoenixLiveviewDemoWeb.Layouts]
 
       import Plug.Conn
-      import PhoenixLiveviewDemoWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -62,8 +61,7 @@ defmodule PhoenixLiveviewDemoWeb do
       use Phoenix.HTML
       import Phoenix.LiveView.Helpers
       import PhoenixLiveviewDemoWeb.CoreComponents
-      import PhoenixLiveviewDemoWeb.Gettext
-
+      
       unquote(verified_routes())
     end
   end
