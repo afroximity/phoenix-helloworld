@@ -36,10 +36,9 @@ RUN mix compile
 COPY rel rel
 RUN mix release
 
-# Start a new build stage so that the final image will only contain
-# the compiled release and other runtime necessities
+# Final Stage
 FROM alpine:3.18 AS app
-RUN apk add --no-cache openssl ncurses-libs libstdc++
+RUN apk add --no-cache openssl ncurses-libs libstdc++ bash
 
 WORKDIR /app
 RUN chown nobody:nobody /app
@@ -50,5 +49,5 @@ ENV HOME=/app
 # Render uses PORT environment variable
 EXPOSE $PORT
 
-# This CMD replaces the startCommand in render.yaml
-CMD ["bin/phoenix_liveview_demo", "start"]
+# Entrypoint for running migrations before launch
+CMD ["bash", "-c", "./bin/phoenix_liveview_demo eval \"PhoenixLiveviewDemo.Release.migrate()\" && ./bin/phoenix_liveview_demo start"]
