@@ -17,12 +17,15 @@ COPY mix.exs mix.lock ./
 COPY config config
 RUN mix do deps.get, deps.compile
 
-# Copy assets
+# Copy assets and install Node dependencies
 COPY assets/package.json assets/package-lock.json ./assets/
 RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 
+# Copy all assets and priv directory
 COPY priv priv
 COPY assets assets
+
+# Deploy assets (this will compile Tailwind CSS)
 RUN mix assets.deploy
 
 # Copy source code
@@ -47,4 +50,5 @@ ENV HOME=/app
 # Render uses PORT environment variable
 EXPOSE $PORT
 
+# This CMD replaces the startCommand in render.yaml
 CMD ["bin/phoenix_liveview_demo", "start"]
