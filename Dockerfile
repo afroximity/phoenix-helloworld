@@ -1,56 +1,60 @@
-# Use the official Elixir image
+# ----------------------
+# Build Stage
+# ----------------------
 FROM elixir:1.15-alpine AS build
 
-# Install build dependencies
 RUN apk add --no-cache build-base npm git python3
 
-# Set build ENV
 ENV MIX_ENV=prod
 
-# Install hex + rebar
 RUN mix local.hex --force && \
     mix local.rebar --force
 
-# Create app directory and copy the Elixir projects into it
 WORKDIR /app
+
+# Copy mix setup
 COPY mix.exs mix.lock ./
 COPY config config
-RUN mix do deps.get, deps.compile
+RUN mix deps.get --only prod
+RUN mix deps.compile
 
-# Copy assets and install Node dependencies
-COPY assets/package.json assets/package-lock.json ./assets/
-RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
-
-# Copy all assets and priv directory
+# Copy ALL project files BEFORE asset build
+COPY lib lib
 COPY priv priv
+COPY rel rel
 COPY assets assets
 
+# Install Node deps (Tailwind etc.)
+RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 
-# Copy Tailwind config files
-COPY assets/tailwind.config.js assets/postcss.config.js assets/
-
-# Deploy assets (this will compile Tailwind CSS)
+# Build assets AFTER everything is present
 RUN mix assets.deploy
 
-# Copy source code
-COPY lib lib
+# Compile final app
 RUN mix compile
 
-# Copy runtime files
-COPY rel rel
+# Build release
 RUN mix release
 
-# Final Stage
+# ----------------------
+# Deploy Stage
+# ----------------------
 FROM alpine:3.18 AS app
+
+# Install runtime dependencies
 RUN apk add --no-cache openssl ncurses-libs libstdc++ bash
 
 WORKDIR /app
 RUN chown nobody:nobody /app
 USER nobody:nobody
+
+# Copy release from build stage
 COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/phoenix_liveview_demo ./
+
 ENV HOME=/app
 
-# Render uses PORT environment variable
+# Required by Render
 EXPOSE $PORT
 
+# Launch app
 CMD ["bin/phoenix_liveview_demo", "start"]

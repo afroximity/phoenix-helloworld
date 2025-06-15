@@ -1,12 +1,10 @@
 // Simplified Tailwind configuration without Heroicons
-const plugin = require("tailwindcss/plugin")
+const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   content: [
     "./js/**/*.js",
-    "../lib/phoenix_liveview_demo_web.ex",
-    "../lib/phoenix_liveview_demo_web/**/*.*ex",
-    "../lib/phoenix_liveview_demo_web/**/*.heex",
+    "../lib/phoenix_liveview_demo_web/**/*.{ex,heex,eex,leex}",
   ],
   theme: {
     extend: {
@@ -22,9 +20,26 @@ module.exports = {
     //
     //     <div class="phx-click-loading:animate-ping">
     //
-    plugin(({ addVariant }) => addVariant("phx-no-feedback", [".phx-no-feedback&", ".phx-no-feedback &"])),
-    plugin(({ addVariant }) => addVariant("phx-click-loading", [".phx-click-loading&", ".phx-click-loading &"])),
-    plugin(({ addVariant }) => addVariant("phx-submit-loading", [".phx-submit-loading&", ".phx-submit-loading &"])),
-    plugin(({ addVariant }) => addVariant("phx-change-loading", [".phx-change-loading&", ".phx-change-loading &"])),
+    plugin(({ addVariant }) =>
+      addVariant("phx-no-feedback", [".phx-no-feedback&", ".phx-no-feedback &"])
+    ),
+    plugin(({ addVariant }) =>
+      addVariant("phx-click-loading", [
+        ".phx-click-loading&",
+        ".phx-click-loading &",
+      ])
+    ),
+    plugin(({ addVariant }) =>
+      addVariant("phx-submit-loading", [
+        ".phx-submit-loading&",
+        ".phx-submit-loading &",
+      ])
+    ),
+    plugin(({ addVariant }) =>
+      addVariant("phx-change-loading", [
+        ".phx-change-loading&",
+        ".phx-change-loading &",
+      ])
+    ),
   ],
-}
+};
