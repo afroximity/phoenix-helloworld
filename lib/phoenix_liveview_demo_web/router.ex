@@ -17,7 +17,8 @@ defmodule PhoenixLiveviewDemoWeb.Router do
   scope "/", PhoenixLiveviewDemoWeb do
     pipe_through :browser
 
-    live "/", DashboardLive
+    live "/", RestaurantDashboardLive
+    live "/dashboard", DashboardLive
     live "/performance", PerformanceLive
     live "/load-test", LoadTestLive
   end

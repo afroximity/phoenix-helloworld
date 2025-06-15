@@ -14,11 +14,11 @@ config :phoenix_liveview_demo, PhoenixLiveviewDemoWeb.Endpoint,
   pubsub_server: PhoenixLiveviewDemo.PubSub,
   live_view: [signing_salt: "your-secret-salt"]
 
+# Use your system username instead of "postgres"
 config :phoenix_liveview_demo, PhoenixLiveviewDemo.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: System.get_env("USER") || "afroximity",
+  password: "",
   hostname: "localhost",
-  port: 5432,
   database: "phoenix_liveview_demo_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,

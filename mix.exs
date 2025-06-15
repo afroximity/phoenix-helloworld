@@ -9,7 +9,8 @@ defmodule PhoenixLiveviewDemo.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: releases()
     ]
   end
 
@@ -36,6 +37,7 @@ defmodule PhoenixLiveviewDemo.MixProject do
       {:phoenix_live_dashboard, "~> 0.8.2"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
+      {:heroicons, "~> 0.5"},
       {:swoosh, "~> 1.3"},
       {:hackney, "~> 1.9"},
       {:finch, "~> 0.13"},
@@ -56,6 +58,16 @@ defmodule PhoenixLiveviewDemo.MixProject do
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "esbuild default"],
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+    ]
+  end
+
+  defp releases do
+    [
+      phoenix_liveview_demo: [
+        include_executables_for: [:unix],
+        applications: [runtime_tools: :permanent],
+        steps: [:assemble, :tar]
+      ]
     ]
   end
 end

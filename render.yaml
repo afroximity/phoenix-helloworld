@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: phoenix-restaurant-dashboard
+    runtime: docker
+    plan: starter
+    region: oregon
+    branch: main
+    buildCommand: mix deps.get && mix assets.deploy
+    startCommand: mix phx.server
+    envVars:
+      - key: MIX_ENV
+        value: prod
+      - key: PHX_SERVER
+        value: true
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: phoenix-restaurant-db
+          property: connectionString
+      - key: PHX_HOST
+        fromService:
+          type: web
+          name: phoenix-restaurant-dashboard
+          property: host
+
+databases:
+  - name: phoenix-restaurant-db
+    databaseName: phoenix_restaurant_dashboard
+    user: phoenix_user
+    plan: starter
+    region: oregon

@@ -1,0 +1,17 @@
+#!/bin/bash
+# Render deployment script
+
+# Make sure we're in the right directory
+cd "$(dirname "$0")/.."
+
+# Set production environment
+export MIX_ENV=prod
+export PHX_SERVER=true
+
+# Run database migrations
+echo "Running database migrations..."
+mix ecto.migrate
+
+# Start the Phoenix server
+echo "Starting Phoenix server..."
+exec mix phx.server

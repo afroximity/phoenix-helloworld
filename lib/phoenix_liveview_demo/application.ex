@@ -12,7 +12,8 @@ defmodule PhoenixLiveviewDemo.Application do
       {Finch, name: PhoenixLiveviewDemo.Finch},
       PhoenixLiveviewDemoWeb.Endpoint,
       PhoenixLiveviewDemo.MetricsCollector,
-      PhoenixLiveviewDemo.LoadGenerator
+      PhoenixLiveviewDemo.LoadGenerator,
+      PhoenixLiveviewDemo.RestaurantMetricsCollector
     ]
 
     opts = [strategy: :one_for_one, name: PhoenixLiveviewDemo.Supervisor]
