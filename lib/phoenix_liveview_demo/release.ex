@@ -26,6 +26,18 @@ defmodule PhoenixLiveviewDemo.Release do
   end
 
   defp load_app do
-    Application.load(@app)
+    IO.puts("🔧 Loading and starting application #{@app}...")
+
+    case Application.ensure_all_started(@app) do
+      {:ok, _} ->
+        :ok
+
+      {:error, {:already_started, _}} ->
+        :ok
+
+      {:error, reason} ->
+        IO.puts("❌ Failed to start app: #{inspect(reason)}")
+        exit(:shutdown)
+    end
   end
 end
