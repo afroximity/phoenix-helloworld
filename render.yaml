@@ -2,7 +2,7 @@ services:
   - type: web
     name: phoenix-restaurant-dashboard
     runtime: docker
-    plan: starter
+    plan: hobby
     region: oregon
     branch: main
     buildCommand: mix deps.get && mix assets.deploy
