@@ -1,4 +1,36 @@
-_build
-deps
+# Elixir
+/_build/
+deps/
+erl_crash.dump
+.elixir_ls/
+*.ez
 
-node_modules
+# Static assets
+priv
+
+# Secrets
+config/*.secret.exs
+
+# Node
+assets/node_modules/
+assets/.vite/
+assets/.next/
+assets/.nuxt/
+assets/.svelte-kit/
+
+# VS Code / JetBrains
+.vscode/
+.idea/
+
+# OS crap
+.DS_Store
+Thumbs.db
+
+# Logs
+log/
+*.log
+
+# Dialyzer
+plt/
+*.plt
+

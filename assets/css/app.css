@@ -1,6 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "cheat.css";
 
 /* LiveView specific styles */
 .phx-no-feedback.invalid-feedback,
@@ -72,14 +73,14 @@
     opacity: 0;
   }
   100% {
-    scale: 1.0;
+    scale: 1;
     opacity: 1;
   }
 }
 
 @keyframes fade-out-scale-keys {
   0% {
-    scale: 1.0;
+    scale: 1;
     opacity: 1;
   }
   100% {
