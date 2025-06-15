@@ -32,11 +32,12 @@ defmodule PhoenixLiveviewDemo.Release do
       {:ok, _} ->
         :ok
 
-      {:error, {:already_started, _}} ->
+      {:error, {:already_started, _pid}} ->
+        # ← 🩸 Accept thy fate gracefully here, don't match-fail
         :ok
 
-      {:error, reason} ->
-        IO.puts("❌ Failed to start app: #{inspect(reason)}")
+      other ->
+        IO.puts("❌ Failed to start app: #{inspect(other)}")
         exit(:shutdown)
     end
   end
