@@ -49,5 +49,4 @@ ENV HOME=/app
 # Render uses PORT environment variable
 EXPOSE $PORT
 
-# Entrypoint for running migrations before launch
-CMD ["bash", "-c", "./bin/phoenix_liveview_demo rpc PhoenixLiveviewDemo.Release.migrate && ./bin/phoenix_liveview_demo start"]
+CMD ["bin/phoenix_liveview_demo", "start"]
